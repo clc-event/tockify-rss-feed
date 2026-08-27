@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from email.utils import format_datetime
 
 ICS_URL = "https://tockify.com/api/feeds/ics/evenements.la.cite"
-CALENDAR_PAGE_URL = "https://tockify.com/evenements.la.cite/agenda"
+CALENDAR_PAGE_URL = "hhttps://www.collegelacite.ca/evenements"
 
 
 def fetch_ics(url):
@@ -89,7 +89,7 @@ def build_rss(calname, events):
   <channel>
     <title>{xml_escape(calname)}</title>
     <link>{CALENDAR_PAGE_URL}</link>
-    <description>Flux RSS genere a partir du calendrier Tockify de La Cite</description>
+    <description>Flux RSS des Événements de La Cite</description>
     <lastBuildDate>{now}</lastBuildDate>
 {chr(10).join(items)}
   </channel>
