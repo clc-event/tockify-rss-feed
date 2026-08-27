@@ -89,7 +89,7 @@ def build_rss(calname, events):
   <channel>
     <title>{xml_escape(calname)}</title>
     <link>{CALENDAR_PAGE_URL}</link>
-    <description>Flux RSS des Événements de La Cite</description>
+    <description>Flux RSS des événements de La Cite</description>
     <lastBuildDate>{now}</lastBuildDate>
 {chr(10).join(items)}
   </channel>
