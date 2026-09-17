@@ -101,6 +101,21 @@ def build_rss(calname, events):
 """
 
 
+def is_upcoming(ev, now):
+    """True if the event hasn't ended yet. Falls back to DTSTART if there's no DTEND."""
+    end = ev.get("DTEND") or ev.get("DTSTART")
+    if not end:
+        return True
+    try:
+        end_dt = parse_dt(end)
+    except ValueError:
+        return True
+    # All-day events (date-only) run through the end of that day.
+    if "T" not in end:
+        end_dt = end_dt.replace(hour=23, minute=59, second=59)
+    return end_dt >= now
+
+
 def main():
     out_path = sys.argv[1] if len(sys.argv) > 1 else "rss.xml"
 
@@ -110,13 +125,15 @@ def main():
     calname = unescape_ics(calname_match.group(1).strip()) if calname_match else "Calendar Feed"
 
     events = parse_events(lines)
+    now = datetime.now(timezone.utc)
+    events = [ev for ev in events if is_upcoming(ev, now)]
     events.sort(key=lambda e: e.get("DTSTART", ""))
 
     rss = build_rss(calname, events)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(rss)
 
-    print(f"Wrote {len(events)} items to {out_path}")
+    print(f"Wrote {len(events)} upcoming items to {out_path}")
 
 
 if __name__ == "__main__":
