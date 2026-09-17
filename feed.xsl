@@ -6,7 +6,7 @@
       <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="icon" type="image/png" href="https://www.collegelacite.ca/documents/10315/31945059/logo_small_squared.png"/>
+        <link rel="icon" type="image/png" href="https://www.collegelacite.ca/documents/10315/31945059/logo_small_squared.png/cd05e238-0b2c-6d6f-0781-b2dd6a2b2a53?t=1632856814501"/>
         <title><xsl:value-of select="title"/></title>
         <style>
           body{font-family:Arial,Helvetica,sans-serif;max-width:800px;margin:0 auto;padding:24px 16px;background:#f7f7f7;color:#222;}
@@ -19,6 +19,8 @@
           .item h2 a:hover{color:#246650;}
           .date{color:#888;font-size:13px;margin-bottom:8px;}
           .desc{font-size:14px;line-height:1.55;white-space:pre-wrap;}
+          .tags{margin-bottom:8px;}
+          .tag{display:inline-block;background:#e5f1ee;color:#246650;font-size:11px;font-weight:600;padding:3px 9px;border-radius:12px;margin-right:6px;margin-bottom:4px;}
         </style>
       </head>
       <body>
@@ -29,6 +31,13 @@
           <div class="item">
             <h2><a href="{link}" target="_blank" rel="noopener"><xsl:value-of select="title"/></a></h2>
             <div class="date"><xsl:value-of select="pubDate"/></div>
+            <xsl:if test="category">
+              <div class="tags">
+                <xsl:for-each select="category">
+                  <span class="tag"><xsl:value-of select="."/></span>
+                </xsl:for-each>
+              </div>
+            </xsl:if>
             <div class="desc"><xsl:value-of select="description"/></div>
           </div>
         </xsl:for-each>
