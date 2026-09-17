@@ -6,6 +6,7 @@
       <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/png" href="https://www.collegelacite.ca/documents/10315/31945059/logo_small_squared.png"/>
         <title><xsl:value-of select="title"/></title>
         <style>
           body{font-family:Arial,Helvetica,sans-serif;max-width:800px;margin:0 auto;padding:24px 16px;background:#f7f7f7;color:#222;}
