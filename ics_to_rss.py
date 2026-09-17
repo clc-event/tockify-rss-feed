@@ -63,33 +63,6 @@ def xml_escape(text):
     return html.escape(text, quote=False)
 
 
-URL_RE = re.compile(r'(https?://[^\s<>"\')\]]+)')
-TRAILING_PUNCT = ".,;:!?)]"
-
-
-def linkify(text):
-    """Escape text for XML, but turn bare http(s) URLs into clickable <a> tags."""
-    parts = []
-    last = 0
-    for m in URL_RE.finditer(text):
-        start, end = m.span()
-        parts.append(xml_escape(text[last:start]))
-
-        url = m.group(1)
-        trailing = ""
-        while url and url[-1] in TRAILING_PUNCT:
-            trailing = url[-1] + trailing
-            url = url[:-1]
-
-        href = html.escape(url, quote=True)
-        parts.append(f'<a href="{href}" target="_blank" rel="noopener">{xml_escape(url)}</a>')
-        parts.append(xml_escape(trailing))
-        last = end
-
-    parts.append(xml_escape(text[last:]))
-    return "".join(parts)
-
-
 def build_rss(calname, events):
     now = format_datetime(datetime.now(timezone.utc))
     items = []
@@ -116,7 +89,7 @@ def build_rss(calname, events):
       <link>{xml_escape(link)}</link>
       <guid isPermaLink="false">{xml_escape(guid)}</guid>
       <pubDate>{pubdate}</pubDate>{category_tags}
-      <description>{linkify(body)}</description>
+      <description>{xml_escape(body)}</description>
     </item>""")
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
