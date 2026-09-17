@@ -51,7 +51,11 @@ def parse_events(lines):
 
 def parse_dt(value):
     value = value.rstrip("Z")
-    dt = datetime.strptime(value, "%Y%m%dT%H%M%S")
+    if "T" in value:
+        dt = datetime.strptime(value, "%Y%m%dT%H%M%S")
+    else:
+        # All-day event, e.g. DTSTART;VALUE=DATE:20261103
+        dt = datetime.strptime(value, "%Y%m%d")
     return dt.replace(tzinfo=timezone.utc)
 
 
