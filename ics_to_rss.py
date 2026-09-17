@@ -74,16 +74,21 @@ def build_rss(calname, events):
         dtstart = ev.get("DTSTART")
         pubdate = format_datetime(parse_dt(dtstart)) if dtstart else now
         guid = ev.get("UID", link)
+        categories = [c.strip() for c in ev.get("CATEGORIES", "").split(",") if c.strip()]
 
         body = desc
         if location:
             body += f"\n\nLieu: {location}"
 
+        category_tags = "".join(
+            f"\n      <category>{xml_escape(c)}</category>" for c in categories
+        )
+
         items.append(f"""    <item>
       <title>{xml_escape(title)}</title>
       <link>{xml_escape(link)}</link>
       <guid isPermaLink="false">{xml_escape(guid)}</guid>
-      <pubDate>{pubdate}</pubDate>
+      <pubDate>{pubdate}</pubDate>{category_tags}
       <description>{xml_escape(body)}</description>
     </item>""")
 
