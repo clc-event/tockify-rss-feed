@@ -19,6 +19,8 @@
           .item h2 a:hover{color:#246650;}
           .date{color:#888;font-size:13px;margin-bottom:8px;}
           .desc{font-size:14px;line-height:1.55;white-space:pre-wrap;}
+          .desc a{color:#246650;text-decoration:underline;}
+          .desc a:hover{color:#1a4b3c;}
           .tags{margin-bottom:8px;}
           .tag{display:inline-block;background:#e5f1ee;color:#246650;font-size:11px;font-weight:600;padding:3px 9px;border-radius:12px;margin-right:6px;margin-bottom:4px;}
         </style>
@@ -38,7 +40,7 @@
                 </xsl:for-each>
               </div>
             </xsl:if>
-            <div class="desc"><xsl:value-of select="description"/></div>
+            <div class="desc"><xsl:value-of select="description" disable-output-escaping="yes"/></div>
           </div>
         </xsl:for-each>
       </body>
